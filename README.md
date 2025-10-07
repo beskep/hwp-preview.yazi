@@ -2,6 +2,8 @@
 
 한컴오피스 한글 yazi 프리뷰.
 
+![preview](https://gist.githubusercontent.com/beskep/33d283976fadeddd8c484d8f73f47202/raw/db2280ab9e376effc6d2a89906d1fb633bfaaac1/hwp-preview.png)
+
 hwp/hwpx 파일 내 저장된 PrvImage, PrvText를 불러오며, 첫 페이지만 볼 수 있습니다.
 PATH에 `7z`이 등록되어 있어야 사용 가능합니다.
 
