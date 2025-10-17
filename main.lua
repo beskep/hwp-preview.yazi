@@ -369,10 +369,8 @@ end
 --- @param job { area: ui.Rect, file: File, mime: string, skip: integer }
 --- @return boolean
 function M:peek(job)
+    local start = os.clock()
     local hwp = init_hwp_file(job)
-
-    --- @type Option
-    local opt = get_option()
 
     if not hwp then
         return false
@@ -380,6 +378,11 @@ function M:peek(job)
     if not M:preload(job) then
         return false
     end
+
+    --- @type Option
+    local opt = get_option()
+
+    ya.sleep(math.max(0, rt.preview.image_delay / 1000 + start - os.clock()))
 
     -- Image preview
     local rendered = hwp.cache.image
