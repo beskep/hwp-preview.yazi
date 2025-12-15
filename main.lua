@@ -23,8 +23,15 @@ local function read_lines(path)
         return nil
     end
 
+    text = text:gsub('\r\n', '\n')
+        :gsub('<%s+', '<')
+        :gsub('%s+>', '>')
+        :gsub('<>', '')
+        :gsub('%s*\n%s*\n%s*', '\n\n')
+        :gsub('   +', '  ')
+
     local lines = {}
-    for line in text:gmatch('([^\r\n]*)') do
+    for line in (text .. '\n'):gmatch('([^\n]*)\n') do
         table.insert(lines, line)
     end
     return lines
