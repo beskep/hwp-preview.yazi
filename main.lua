@@ -242,13 +242,14 @@ local function init_hwp_cache(file, cache)
 
     local img = fs.cha(image)
     local txt = fs.cha(text)
-    local mtime = math.min(img and img.mtime or 0, txt and txt.mtime or 0)
+    local cache_mtime = math.min((img and img.mtime) or 0, (txt and txt.mtime) or 0)
+    local file_mtime = (file.cha and file.cha.mtime) or math.huge
 
     return {
         cache = cache,
         image = image,
         text = text,
-        update = mtime < file.cha.mtime,
+        update = cache_mtime < file_mtime,
     }
 end
 
@@ -388,8 +389,8 @@ function M:peek(job)
 
     --- @type Option
     local opt = get_option()
-
-    ya.sleep(math.max(0, rt.preview.image_delay / 1000 + start - os.clock()))
+    local delay = (rt and rt.preview and rt.preview.image_delay) or 0
+    ya.sleep(math.max(0, delay / 1000 + start - os.clock()))
 
     -- Image preview
     local rendered = hwp.cache.image
